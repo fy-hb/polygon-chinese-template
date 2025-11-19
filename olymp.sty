@@ -4,6 +4,9 @@
 % License: https://github.com/GassaFM/olymp.sty/blob/master/LICENSE
 % Authors: https://github.com/GassaFM/olymp.sty/blob/master/AUTHORS
 %
+% From: https://github.com/fstqwq/polygon-chinese-template
+% Modified by frostice: https://github.com/fy-hb/polygon-chinese-template
+%
 
 \ProvidesPackage{olymp}
 
@@ -97,13 +100,6 @@
 \fi
 
 % -- End of setup margins --
-
-%---------- From package "lastpage" ------------------
-\def\lastpage@putlabel{\addtocounter{page}{-1}%
-   \immediate\write\@auxout{\string\newlabel{LastPage}{{}{\thepage}}}%
-   \addtocounter{page}{1}}
-\AtEndDocument{\clearpage\lastpage@putlabel}%
-%---------- end of "lastpage" ------------------
 
 % -- Setup sizes --
 \newlength{\exmpwidinf}
@@ -273,7 +269,7 @@
 \def\kw@Subtask{子任务}
 \def\kw@points{分}
 \def\kw@Page{第}
-\def\kw@of{页，共}
+\def\kw@of{页 \space 共}
 \def\kw@ChinesePageEnd{页}
 \def\kw@notstated{not stated}
 \def\kw@IntentionallyBlankPage{该页留空}
@@ -490,6 +486,10 @@
 \global\let\lastproblemauthor\thisproblemauthor
 \global\let\lastproblemdeveloper\thisproblemdeveloper
 \global\let\lastproblemorigin\thisproblemorigin
+
+\ifdefined\addtitletoproblemtoc
+  \addtitletoproblemtoc{\ProblemIndex}{#1}
+\fi
 
 % Hotfix
 %\def\@memorylimit{#5}
@@ -776,9 +776,10 @@
 \renewcommand{\@oddhead}{
     \ifdefined\thecontestname
         \parbox{\textwidth}{
-            \sffamily
             \begin{center}
-                \protect\contestname
+                \protect\begin{tabular}{lr}
+                    \raggedright \thecontestname & \raggedleft \thecontestdate
+                \end{tabular}
                 \\[2pt]
                 \hrule
             \end{center}

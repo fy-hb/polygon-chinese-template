@@ -21,6 +21,7 @@
 \usepackage {lastpage}
 \usepackage {listings}
 \usepackage {booktabs}
+\usepackage {etoolbox}
 
 % 如果需要去掉题面中的 输入文件/输出文件/时间限制/空间限制 请分别取消注释这四项
 % \def\NoInputFileName{}
@@ -89,6 +90,8 @@
 }
 
 \begin {document}
+
+% 以下是题目标题页的示例
 
 % \title{\textbf{\Huge{${contest.name!}}}}
 % \date{${contest.date!}}
