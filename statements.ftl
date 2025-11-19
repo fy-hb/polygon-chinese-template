@@ -1,12 +1,11 @@
 \documentclass [11pt, a4paper, oneside] {article}
-
+\usepackage [UTF8]{ctex}
 \usepackage [T2A] {fontenc}
 \usepackage [utf8] {inputenc}
-<#if contest.language?? && contest.language="chinese">\usepackage {CJK}</#if>
 \usepackage [english, russian] {babel}
 \usepackage {amsmath}
 \usepackage {amssymb}
-\usepackage <#if contest.language?? && contest.language="russian">[russian]<#elseif contest.language?? && contest.language="chinese">[chinese]</#if>{olymp}
+\usepackage [chinese]{olymp}
 \usepackage {comment}
 \usepackage {epigraph}
 \usepackage {expdlist}
@@ -14,30 +13,122 @@
 \usepackage {multirow}
 \usepackage {siunitx}
 \usepackage {ulem}
-%\usepackage {hyperref}
+\usepackage {hyperref}
 \usepackage {import}
 \usepackage {ifpdf}
+\usepackage {xparse}
+\usepackage {color}
+\usepackage {lastpage}
+\usepackage {listings}
+\usepackage {booktabs}
+
+% 如果需要去掉题面中的 输入文件/输出文件/时间限制/空间限制 请分别取消注释这四项
+% \def\NoInputFileName{}
+% \def\NoOutputFileName{}
+% \def\NoTimeLimit{}
+% \def\NoMemoryLimit{}
+
+% 如果需要左页留空 请取消注释下一行
+% \intentionallyblankpagestrue
+
 \ifpdf
   \DeclareGraphicsRule{*}{mps}{*}{}
 \fi
 
+\definecolor{mygreen}{RGB}{28,172,0}
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{mygray}{RGB}{128,128,128}
+\definecolor{mymauve}{RGB}{124,6,123}
+\definecolor{myblue}{RGB}{14,84,175}
+\definecolor{mybg}{RGB}{248,248,248}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fixed,
+	numbers=left,
+	numberstyle=\small\color{mygray},
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	rulecolor=\color{black},
+	tabsize=2,
+	captionpos=t,
+	breaklines=true,
+	postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow}\space},
+	commentstyle=\color{mygreen},
+	keywordstyle={\bfseries\color{blue}},
+	stringstyle=\color{mymauve},
+	deletekeywords={...},
+	xleftmargin=2em,
+	identifierstyle=\color{black},
+}
+
+\def\problemtoc{}
+
+\makeatletter
+\newcommand{\addproblemtoc}[2]{\gappto\problemtoc{#1 & #2 \\}}
+
+\makeatletter
+\newcommand{\addtitletoproblemtoc}[2]{
+\protected@write\@auxout{}{\string\addproblemtoc{#1}{#2}}
+}
+
+\makeatletter
+\newcommand{\makeproblemtoc}{
+\begin{center}
+\begin{tabular}{rl}
+\toprule
+题号 & 题目名称 \\
+\midrule
+\problemtoc
+\bottomrule
+\end{tabular}
+\end{center}
+}
+
 \begin {document}
-<#if contest.language?? && contest.language="chinese">
-\begin{CJK}{UTF8}{gbsn}
-\renewcommand{\textit}[1]{\begin{CJK}{UTF8}{gkai}\it#1\end{CJK}}
-</#if>
+
+% \title{\textbf{\Huge{${contest.name!}}}}
+% \date{${contest.date!}}
+% \author{${contest.location!}}
+% \maketitle
+%
+% \begin{center}
+% \includegraphics[width=3in]{statements-logo.png}
+% \end{center}
+%
+% \vspace{2.5em}
+%
+% \begin{center}
+% \Large
+%
+% \makeproblemtoc
+%
+% \vspace{1em}
+%
+% \Large \textbf{请勿在比赛正式开始前打开题面！}
+% \end{center}
+% \thispagestyle{empty}
+%
+% \clearpage
+% \phantom{s}
+% \thispagestyle{empty}
+% \setcounter{page}{0}
+%
+% \clearpage
 
 \contest
 {${contest.name!}}%
 {${contest.location!}}%
 {${contest.date!}}%
 
+
 \binoppenalty=10000
 \relpenalty=10000
 
-\renewcommand{\t}{\texttt}
-
-\renewcommand{\tiny}[1]{\footnote{#1}} % HACK for problem qfmyq
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
 <#if shortProblemTitle?? && shortProblemTitle>
   \def\ShortProblemTitle{}
@@ -54,7 +145,5 @@
 \input ${statement.file}
 </#if>
 </#list>
-<#if contest.language?? && contest.language="chinese">
-\end{CJK}
-</#if>
+
 \end {document}
