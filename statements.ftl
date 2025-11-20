@@ -68,15 +68,14 @@
 
 \def\problemtoc{}
 
-\makeatletter
 \newcommand{\addproblemtoc}[2]{\gappto\problemtoc{#1 & #2 \\}}
 
 \makeatletter
 \newcommand{\addtitletoproblemtoc}[2]{
 \protected@write\@auxout{}{\string\addproblemtoc{#1}{#2}}
 }
+\makeatother
 
-\makeatletter
 \newcommand{\makeproblemtoc}{
 \begin{center}
 \begin{tabular}{rl}
