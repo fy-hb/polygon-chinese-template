@@ -66,66 +66,57 @@
 	identifierstyle=\color{black},
 }
 
-\def\problemtoc{}
-
-\newcommand{\addproblemtoc}[2]{\gappto\problemtoc{#1 & #2 \\}}
-
-\makeatletter
-\newcommand{\addtitletoproblemtoc}[2]{
-\protected@write\@auxout{}{\string\addproblemtoc{#1}{#2}}
-}
-\makeatother
-
-\newcommand{\makeproblemtoc}{
-\begin{center}
-\begin{tabular}{rl}
-\toprule
-题号 & 题目名称 \\
-\midrule
-\problemtoc
-\bottomrule
-\end{tabular}
-\end{center}
-}
+\newif\ifmultistatements
 
 \begin {document}
 
+<#list statements as statement>
+<#if statement.path??>
+\multistatementstrue
+</#if>
+</#list>
+
+\ifmultistatements
+
 % 以下是题目标题页的示例
 
-% \title{\textbf{\Huge{${contest.name!}}}}
-% \date{${contest.date!}}
-% \author{${contest.location!}}
-% \maketitle
-%
-% \begin{center}
-% \includegraphics[width=3in]{statements-logo.png}
-% \end{center}
-%
-% \vspace{2.5em}
-%
-% \begin{center}
-% \Large
-%
-% \makeproblemtoc
-%
-% \vspace{1em}
-%
-% \Large \textbf{请勿在比赛正式开始前打开题面！}
-% \end{center}
-% \thispagestyle{empty}
-%
-% \clearpage
-% \phantom{s}
-% \thispagestyle{empty}
-% \setcounter{page}{0}
-%
-% \clearpage
+\title{\textbf{\Huge{${contest.name!}}}}
+\date{${contest.date!}}
+\author{${contest.location!}}
+\maketitle
+
+\begin{center}
+\includegraphics[width=3in]{statements-logo.png}
+\end{center}
+
+\vspace{2.5em}
+
+\begin{center}
+\Large
+
+\makeproblemtoc
+
+\vspace{1em}
+
+\Large \textbf{请勿在比赛正式开始前打开题面！}
+\end{center}
+\thispagestyle{empty}
+
+\clearpage
+\phantom{s}
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\clearpage
+
+\fi
+
+% 以上是题目标题页的示例
 
 \contest
 {${contest.name!}}%
 {${contest.location!}}%
 {${contest.date!}}%
-
 
 \binoppenalty=10000
 \relpenalty=10000
